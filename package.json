@@ -1,0 +1,30 @@
+{
+  "name": "node-red-contrib-js-storage",
+  "version": "1.0.0",
+  "description": "Node-RED storage plugin to store flows as js files for easy readability, code reviews and scans",
+  "main": "localfilesystem/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "fs-extra": "8.1.0",
+    "js-yaml": "3.13.1"
+  },
+  "devDependencies": {
+    "jest": "29.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barshociaj/node-red-contrib-js-storage.git"
+  },
+  "keywords": [
+    "node-red",
+    "js",
+    "storage"
+  ],
+  "node-red": {
+    "nodes": {
+      "jsstore": "localfilesystem/index.js"
+    }
+  }
+}

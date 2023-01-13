@@ -4,13 +4,13 @@ Node-RED storage plugin to store flows as `.js` files for easy readability, code
 
 ## Overview
 
-Node-RED stores flows in an unreadable singe-line JSON file. Inspired by `node-red-contrib-yaml-storage` plugin, the js-storage plugin takes readability further and splits flows JSON file into individual javascript files - valid CommonJS modules that are easy to read, scan, and commit.
+Node-RED stores flows in a JSON file with dynamic order and stringified code. Inspired by `node-red-contrib-yaml-storage` plugin, the js-storage plugin takes readability further and splits flows JSON file into individual JavaScript files - valid CommonJS modules that are easy to read, scan, and commit.
 
 ![Example file structure](flows_js.png "Example file structure")
 
 ## Advantages
 
-- Javascript files have static names (from node type and ID). Re-arranging nodes will not mess up your diffs anymore!
+- JavaScript files have static names (from node type and ID). Re-arranging nodes will not mess up your diffs anymore!
 - Function code can be scanned by Sonarqube or other static code analysis tools.
 - Function code is editable outside Node-RED (use this feature at own risk).
 - `flows.json` (and it's backup file) is still kept updated by default (see configuration). This means you can use them as a backup, for backward compatibility, or for code sharing.
@@ -62,7 +62,7 @@ storageModule: require("node-red-contrib-js-storage");
 
 On initial load the plugin reads your current flows file in either JSON or YAML format (if you used `node-red-contrib-yaml-storage`) and converts them on save. **Support for initial YAML conversion will be removed in future versions**
 
-Javascript files for deleted nodes (with extension `.flows.js`) are deleted on Deploy. If you need to restore the previous state from flows json backup file, delete the whole directory.
+JavaScript files for deleted nodes (with extension `.flows.js`) are deleted on Deploy. If you need to restore the previous state from flows json backup file, delete the whole directory.
 
 ## Example
 

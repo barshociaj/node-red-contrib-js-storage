@@ -173,6 +173,9 @@ module.exports = {
     if (type === "flows" && settings.flowFilePretty) {
       body = JSON.stringify(JSON.parse(body), null, 4);
     }
+    if (type === "flows") {
+      console.log("debug: saveLibraryEntry: flows", path, meta);
+    }
     return fs.ensureDir(fspath.dirname(fn)).then(function () {
       util.writeFile(fn, headers + body);
     });

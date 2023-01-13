@@ -1,6 +1,6 @@
 /**
  * Node-RED source: https://github.com/node-red/node-red/blob/master/packages/node_modules/%40node-red/runtime/lib/storage/localfilesystem/projects/index.js
- * ... modified to provide getFlows and saveFlows that create individual js files per node instead of flows.json + support flowFile and flowDir from settings
+ * ... modified to provide getFlows and saveFlows that create individual JS files per node instead of flows.json + support flowDir + flowFileReadOnly from settings
  * ... removed @node-red/util log
  *
  * Copyright JS Foundation and other contributors, http://js.foundation
@@ -137,14 +137,8 @@ async function saveFlows(flows, user) {
     flowData = JSON.stringify(flows);
   }
 
-  // Keep flows.json file as backup or for code sharing - unless turned off via `flowFileIgnored: true` setting
-  console.log(
-    "debug: settings.flowFileIgnored",
-    typeof settings.flowFileIgnored,
-    settings.flowFileIgnored,
-    !settings.flowFileIgnored
-  );
-  if (!settings.flowFileIgnored) {
+  // Keep flows.json file as backup or for code sharing - unless turned off via `flowFileReadOnly: true` setting
+  if (!settings.flowFileReadOnly) {
     await util.writeFile(flowsFullPath, flowData, flowsFileBackup);
   }
 

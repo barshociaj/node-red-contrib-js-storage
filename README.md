@@ -21,21 +21,22 @@ The plugin reads the following configuration from `settings.js`:
 
 - `storageModule`
   - Required. Must be set to `require('node-red-contrib-js-storage')`
-- `flowFile`
-  - Optional. Use as usual, but can also be set to `false` if you want to completely disable updates of flows.json file.
 - `flowDir`
   - Optional. Set to your own directory name for flows.
+- `flowFileReadOnly`
+  - Optional. Set to `true` if you want to stop using (or completely remove) flows.json and it's backup file.
 
 Example:
 
 ```
  storageModule: require('node-red-contrib-js-storage')
 
-  // The file containing the flows. If not set, it defaults to flows_<hostname>.json. If set to false, flows file is disabled.
- flowFile: false,
-
- // The dir containing the flows. If not set, it defaults to <flowFile without extension>_js
+ // node-red-contrib-js-storage: The dir containing the flows. If not set, it defaults to <flowFile without extension>_js
  flowDir: "flows_js",
+
+ // node-red-contrib-js-storage: Prevent updates to flow file. If not set, flow file will be kept updated along JS files in flowDir
+ flowFileReadOnly: true,
+
 ```
 
 ## Installation

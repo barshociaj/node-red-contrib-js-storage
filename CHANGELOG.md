@@ -2,6 +2,10 @@
 
 This changelog uses [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
 
+# 1.0.2 (13 January 2023)
+
+- Upgraded dependencies in lock file
+
 # 1.0.1 (13 January 2023)
 
 ## Changed

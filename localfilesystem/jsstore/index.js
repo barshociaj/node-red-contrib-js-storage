@@ -137,14 +137,14 @@ async function saveFlows(flows, user) {
     flowData = JSON.stringify(flows);
   }
 
-  // Keep flows.json file as backup or for code sharing - unless turned off via `flowFile: false` setting
+  // Keep flows.json file as backup or for code sharing - unless turned off via `flowFileIgnored: true` setting
   console.log(
-    "debug: settings.flowFile",
-    typeof settings.flowFile,
-    settings.flowFile,
-    settings.flowFile !== false
+    "debug: settings.flowFileIgnored",
+    typeof settings.flowFileIgnored,
+    settings.flowFileIgnored,
+    !settings.flowFileIgnored
   );
-  if (settings.flowFile !== false) {
+  if (!settings.flowFileIgnored) {
     await util.writeFile(flowsFullPath, flowData, flowsFileBackup);
   }
 

@@ -17,6 +17,7 @@ const vm = require("vm");
 
 const storageExtension = ".flows.js";
 const logPrefix = "node-red-contrib-js-storage: ";
+const orderFileName = "_order.json";
 
 const nodePrefix = `const Node = `;
 const nodeSuffix = `module.exports = Node;`;
@@ -51,6 +52,13 @@ function textAsTemplateLiteral(txt) {
     out += textEscapes[c] || c;
   }
   return out;
+}
+
+// saveFile saves data to dirPath/fileName using stream
+async function saveFile(dirPath, fileName, data) {
+  const stream = fs.createWriteStream(fspath.join(dirPath, fileName));
+  await new Promise((res) => stream.write(data, res));
+  await new Promise((res) => stream.end(res));
 }
 
 // ConvertNode is added and executed inside the js file to extract Node JSON with functions as strings
@@ -163,11 +171,28 @@ function indent(code) {
 // readJSONArrayFromJSFiles reads dirPath and returns JSON array from .flows.js files
 function readJSONArrayFromJSFiles(dirPath, emptyResponse) {
   let out = [];
+  let fileNames = [];
+
+  // Read _order.json file
+  try {
+    fileNames = JSON.parse(
+      fs.readFileSync(fspath.join(dirPath, orderFileName))
+    );
+  } catch (e) {
+    console.warn(`${logPrefix}Invalid order file, skipping (${e.message})`);
+  }
+
   try {
     const files = fs.readdirSync(dirPath);
     for (let fileName of files) {
+      if (!fileName.endsWith(storageExtension)) continue; // Ignore unsupported files
       const data = fs.readFileSync(fspath.join(dirPath, fileName));
-      out.push(js2json(data));
+      const json = js2json(data);
+      // Note before version 1.0.3 nodes contained _order attribute. The following provides backward compatibility to support it (as well as the new _order.json file).
+      if (fileNames.length > 0) {
+        json._order = fileNames.indexOf(fileName);
+      }
+      out.push(json);
     }
     // Keep order to ensure flows hash is equal with UI
     out.sort((a, b) => a._order - b._order);
@@ -189,16 +214,11 @@ function readJSONArrayFromJSFiles(dirPath, emptyResponse) {
 async function writeJSONArrayToJSFiles(dirPath, content) {
   const fileNames = [];
   const contentClone = JSON.parse(JSON.stringify(content));
-  let order = 0;
   try {
     for (let json of contentClone) {
-      // Keep order to ensure flows hash is equal with UI
-      json._order = order++;
       const [data, fileName] = json2js(json);
       fileNames.push(fileName);
-      const stream = fs.createWriteStream(fspath.join(dirPath, fileName));
-      await new Promise((res) => stream.write(data, res));
-      await new Promise((res) => stream.end(res));
+      await saveFile(dirPath, fileName, data);
     }
   } catch (e) {
     throw new Error(`${logPrefix}Failed saving to ${dirPath} (${e.message})`);
@@ -217,6 +237,13 @@ async function writeJSONArrayToJSFiles(dirPath, content) {
     }
   } catch (e) {
     throw new Error(`${logPrefix}Failed cleaning up old files (${e.message})`);
+  }
+
+  // Save _order.json file - keeps the exact order of nodes to ensure flows hash is equal with UI
+  try {
+    await saveFile(dirPath, orderFileName, JSON.stringify(fileNames, null, 2));
+  } catch (e) {
+    throw new Error(`${logPrefix}Error saving ${orderFileName} (${e.message})`);
   }
 }
 

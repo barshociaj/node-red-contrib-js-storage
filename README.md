@@ -110,8 +110,7 @@ const Node = {
   "wires": [
     []
   ],
-  "info": "",
-  "_order": 43,
+  "info": ""
 };
 
 Node.info = `

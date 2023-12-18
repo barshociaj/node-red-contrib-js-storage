@@ -2,6 +2,11 @@
 
 This changelog uses [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
 
+# 1.0.3 (18 December 2023)
+
+- Moved node order to a separate file `_order.json` to minimize the number of file updates when nodes are added to flows
+- Upgraded dependencies
+
 # 1.0.2 (13 January 2023)
 
 - Upgraded dependencies in lock file

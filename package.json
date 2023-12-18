@@ -1,18 +1,19 @@
 {
   "name": "node-red-contrib-js-storage",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Node-RED storage plugin to store flows as js files for easy readability, code reviews and scans",
   "main": "localfilesystem/index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "upgrade": "npm-check -u --save-exact"
   },
   "dependencies": {
-    "fs-extra": "11.1.0",
+    "fs-extra": "11.2.0",
     "js-yaml": "4.1.0"
   },
   "devDependencies": {
-    "jest": "29.3.1"
+    "jest": "29.7.0"
   },
   "repository": {
     "type": "git",

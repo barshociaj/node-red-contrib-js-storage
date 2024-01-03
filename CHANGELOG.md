@@ -2,6 +2,10 @@
 
 This changelog uses [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
 
+# 1.0.4 (3 January 2024)
+
+- Add `\r` character to line splitting to avoid repeated code indent of functions created on Windows
+
 # 1.0.3 (18 December 2023)
 
 - Moved node order to a separate file `_order.json` to minimize the number of file updates when nodes are added to flows

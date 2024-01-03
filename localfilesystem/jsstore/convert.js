@@ -65,7 +65,7 @@ async function saveFile(dirPath, fileName, data) {
 function ConvertNode(jsstore) {
   const funcIndent = "  "; // Re-define for vm
   const outdent = (code) => {
-    const lines = code.split("\n");
+    const lines = code.split(/\r?\n/);
     let out = [];
     for (let line of lines) {
       if (line.startsWith(funcIndent)) {
@@ -163,7 +163,7 @@ function json2js(json) {
 // indent indents function code with 2 spaces
 function indent(code) {
   return code
-    .split("\n")
+    .split(/\r?\n/)
     .map((line) => funcIndent + line)
     .join("\n");
 }

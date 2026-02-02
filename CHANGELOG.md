@@ -2,6 +2,10 @@
 
 This changelog uses [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
 
+# 1.0.5 (2 February 2026)
+
+- Upgraded dependencies
+
 # 1.0.4 (3 January 2024)
 
 - Add `\r` character to line splitting to avoid repeated code indent of functions created on Windows
